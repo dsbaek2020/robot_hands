@@ -89,15 +89,17 @@ def linear_hands_control(force):
 
 #모터 객체 선언
 myHands = Motor('B')
-# 힘센서 객체 선언 
+#힘센서 객체 선언 
 s1 = ForceSensor('A')
 #상태 변수 선언 
 state = "ready"
 
 #미분 주기 정의                      단위 [sec]
 T_of_differenciation = 0.5         
-#힘센서 미분값(3초 간격으로 미분) 정의   단위 [%]/sec
+
+#힘센서 미분값(0.5초 간격으로 미분) 정의   단위 [%]/sec
 diffent_of_forceSensor =0
+
 #현재 힘 센서량 및 과거 0.5초전 힘 센서량, 단위 [%]
 current_force = 0
 pre_force = 0
