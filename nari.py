@@ -31,7 +31,7 @@ import time
 
         # working : 물체을 잡는 손의 펼침과 닫힘 간격을  힘 센서의 값의 함수로 작동하는 상태이다.
         #           힘센서와 동기화 되어 작동하는 모션이된 상태이다. 
-        #           만약 힘 센서의 값의 변화량이  0.5초 이상 10%이하로 된다면 홀딩 상태로 전환 한다.
+        #           만약 힘 센서의 값의 변화량이  0.5초 이상 5%이하로 된다면 홀딩 상태로 전환 한다.
 
 
         # holding : 사용자의 힘센서 잡는 수치가 20%이하라면 마지막 working상태를 유지한다.
@@ -52,7 +52,7 @@ def decision_next_state(switchForce, current_state, forceChangeValue):
   #현재의 상태가 물체를 잡은 상태이며, 힘조절 센서값의 변화가 5%이하라면
   #다음 상태를 홀딩(물체를 계속 잡아주는 상태)으로 전환한다.
   elif current_state == 'working':
-    if abs(forceChangeValue) < 10:
+    if abs(forceChangeValue) < 5:
        next_state = 'holding'
     else:
        next_state = 'working' 
@@ -72,13 +72,11 @@ def decision_next_state(switchForce, current_state, forceChangeValue):
 
 
 def linear_hands_control(force):
-
         #모터의 위치(각도)를 힘센서 값에 따라서 선형적으로 변화하는 1차 함수로 계산한다. 
         hand_motor_angle = round(force/100*90)
         
         #위에서 계산된 위치로 이동 되도록 모터를 회전 시킨다. 
-        myHands.run_to_position(hand_motor_angle)
-        
+        myHands.run_to_position(hand_motor_angle)       
         
         #실제 모터의 위치값을 수신받아 터미널에 출력한다. 
         real_angle = myHands.get_aposition()
